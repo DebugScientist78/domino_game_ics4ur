@@ -16,10 +16,11 @@ class Deque:
 
 
 class GameBoard:
-	def __init__(self):
-		self.board = Deque()
-		self.pile = DominosPile.DominosPile()
-	def get_dom_expr(self):
+	board = Deque()
+	pile = DominosPile.DominosPile()
+	
+	@staticmethod
+	def get_dom_expr():
 		a = random.randint(0,12)
 		b = random.randint(0,12)
 		#order the ints such that the larger is in front
@@ -28,19 +29,20 @@ class GameBoard:
 			expr = str(b)+'|'+str(a)
 		return expr
 
-	def grabStartHand(self):
+	@staticmethod
+	def grabStartHand():
 		''' 
 		Grab 7 dominos from the pile and return them as a list
 		'''
 		ls = []
 		for x in range(7):
-			expr = self.get_dom_expr()
+			expr = GameBoard.get_dom_expr()
 			while True:
 				#prevent dupes
-				if self.pile.dom_dict[expr] == "v":
-					expr = self.get_dom_expr()
+				if GameBoard.pile.dom_dict[expr] == "v":
+					expr = GameBoard.get_dom_expr()
 				else:
 					break
-			self.pile.dom_dict[expr] = "v"
+			GameBoard.pile.dom_dict[expr] = "v"
 			ls.append(expr)
 		return ls
