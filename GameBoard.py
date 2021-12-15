@@ -20,14 +20,26 @@ class GameBoard:
 	pile = DominosPile.DominosPile()
 	
 	@staticmethod
-	def get_dom_expr():
+	def getDomExpr(a, b):
+		'''
+		Assume a > b, put the two integers into a string domino form
+		'''
+		return str(a)+'|'+str(b)
+
+	@staticmethod
+	def getRanDomExpr():
 		a = random.randint(0,12)
 		b = random.randint(0,12)
 		#order the ints such that the larger is in front
-		expr = str(a)+'|'+str(b)
 		if b > a:
-			expr = str(b)+'|'+str(a)
-		return expr
+			return GameBoard.getDomExpr(b,a)
+		return GameBoard.getDomExpr(a,b)
+
+	@staticmethod
+	def getDomNum(expr):
+		#returns the ints from a domino string
+		return int(expr.split("|"))
+
 
 	@staticmethod
 	def grabStartHand():
@@ -36,11 +48,11 @@ class GameBoard:
 		'''
 		ls = []
 		for x in range(7):
-			expr = GameBoard.get_dom_expr()
+			expr = GameBoard.getRanDomExpr()
 			while True:
 				#prevent dupes
 				if GameBoard.pile.dom_dict[expr] == "v":
-					expr = GameBoard.get_dom_expr()
+					expr = GameBoard.getRanDomExpr()
 				else:
 					break
 			GameBoard.pile.dom_dict[expr] = "v"
