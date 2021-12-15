@@ -13,5 +13,13 @@ if __name__ == "__main__":
 		GameEngine.GameEngine.player_list.append(temp)
 	print(GameEngine.GameEngine.player_list)
 
+	while True:
+		GameEngine.GameEngine.num_games = GameEngine.GameEngine.retriveInput("How many rounds?: ", True, "Please enter an odd int")
+		if GameEngine.GameEngine.verifyGamesCount(GameEngine.GameEngine.num_games):
+			break
+		else:
+			print("Please enter an odd integer")
+
 	#print(GameBoard.GameBoard.grabStartHand())
-	print(GameBoard.GameBoard.pile.dom_dict)
+	#print(GameBoard.GameBoard.pile.dom_dict)
+	print(GameEngine.GameEngine.num_games)

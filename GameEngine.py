@@ -3,6 +3,7 @@ class GameEngine:
 	turn_order = []
 	turn_num = 0
 	num_players = 0
+	num_games = 0
 	
 	@staticmethod
 	def retriveInput(msg='', is_int=False, error_msg=''):
@@ -21,7 +22,7 @@ class GameEngine:
 				print(error_msg)
 
 	@staticmethod
-	def verifyTurnCount(num):
+	def verifyGamesCount(num):
 		if num % 2 == 0: return False
 		return True
 
