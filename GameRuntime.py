@@ -35,3 +35,4 @@ class GameRuntime:
 		#print(GameBoard.GameBoard.grabStartHand())
 		#print(GameBoard.GameBoard.pile.dom_dict)
 		print(GameEngine.GameEngine.num_games)
+		GameEngine.GameEngine.determineTurnOrder()

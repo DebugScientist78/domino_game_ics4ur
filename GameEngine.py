@@ -32,14 +32,28 @@ class GameEngine:
 	def determineTurnOrder():
 		'''
 		critera: 
-		if player has 12|12, add to turn order
+		if player has 12|12, add to turn order first
 		if player has highest double, add to turn order
 		Lastly if no double was there, pick 4th domino get the sum of each number then the highest to lowest of sum order becomes the turn order
 		'''
-		double_c = 12
+		player_in_list = [False] * GameEngine.num_players
+		print(player_in_list)
+		for x in range(12, -1, -1):
+			for plr in range(GameEngine.num_players):
+				expr = GameBoard.GameBoard.getDomExpr(x, x)
+				if GameEngine.player_list[plr].doesHandHave(expr) and player_in_list[plr] == False:
+					GameEngine.turn_order.append(GameEngine.player_list[plr])
+					player_in_list[plr] = True
+
+		print(GameEngine.turn_order)
+		remaining_players = []
 		for x in range(GameEngine.num_players):
-			expr = GameBoard.GameBoard.getDomExpr(double_c, double_c)
-			if GameEngine.player_list[x].doesHandHave(expr):
-				GameEngine.turn_order.append(GameEngine.player_list[x])
-				break
-		double_c -= 1
+			if player_in_list[x] == False:
+				a, b = GameBoard.GameBoard.getDomNum(GameEngine.player_list[x].hand[3])
+				pair = (int(a+b), GameEngine.player_list[x])
+				remaining_players.append(pair)
+		remaining_players.sort(reverse=True)
+		print(remaining_players)
+		for x in remaining_players:
+			GameEngine.turn_order.append(x[1])
+		print(GameEngine.turn_order)

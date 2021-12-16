@@ -38,7 +38,10 @@ class GameBoard:
 	@staticmethod
 	def getDomNum(expr):
 		#returns the ints from a domino string
-		return int(expr.split("|"))
+		a,b = expr.split("|")
+		a = int(a)
+		b = int(b)
+		return a,b
 
 
 	@staticmethod
