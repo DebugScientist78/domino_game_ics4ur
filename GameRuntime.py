@@ -11,6 +11,7 @@ class GameRuntime:
 			val = GameEngine.GameEngine.retriveInput("1) Play\n2) Read the Rules\n3) Exit Program \n", True, "Please Enter an from 1-3")
 			if val == 1:
 				GameRuntime.gameSetup()
+				GameRuntime.simulateGame()
 			if val == 3: return
 
 	@staticmethod
@@ -36,3 +37,21 @@ class GameRuntime:
 		#print(GameBoard.GameBoard.pile.dom_dict)
 		print(GameEngine.GameEngine.num_games)
 		GameEngine.GameEngine.determineTurnOrder()
+
+	@staticmethod
+	def playTurn(player):
+
+
+	@staticmethod
+	def simulateGame():
+		GameEngine.GameEngine.turn_order += 1
+		'''
+		check if player has a win condition
+		1) if a player's hand is empty
+		2) if the pile is empty, or no player can play a domino from their hand or (if) existing pile
+			the player with the lowest domino sum wins
+		'''
+
+		for x in GameEngine.GameEngine.turn_order:
+			if x.isEmpty():
+				return x

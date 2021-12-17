@@ -17,3 +17,7 @@ class Player:
 			if x == expr:
 				return True
 		return False
+
+	def isEmpty(self):
+		if len(self.hand) == 0: return True
+		return False
