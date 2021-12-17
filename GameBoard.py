@@ -13,6 +13,10 @@ class Deque:
 		self.deq.pop(0)
 	def popR(self):
 		self.deq.pop(-1)
+	def getL(self):
+		return self.deq[0]
+	def getR(self):
+		return self.deq[-1]
 
 
 class GameBoard:
@@ -61,3 +65,18 @@ class GameBoard:
 			GameBoard.pile.dom_dict[expr] = "v"
 			ls.append(expr)
 		return ls
+
+	@staticmethod
+	def getRemainPile():
+		ls = []
+		for key in GameBoard.pile.dom_dict:
+			if GameBoard.pile.dom_dict[key] != 'v':
+				ls.append(key)
+		return ls
+
+	@staticmethod
+	def validDominos(hand):
+		'''
+		given an string array of dominos, check to see if any of them are valid to play
+		return False if none, return a list of valid options
+		'''

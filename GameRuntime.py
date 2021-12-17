@@ -11,14 +11,18 @@ class GameRuntime:
 			val = GameEngine.GameEngine.retriveInput("1) Play\n2) Read the Rules\n3) Exit Program \n", True, "Please Enter an from 1-3")
 			if val == 1:
 				GameRuntime.gameSetup()
-				GameRuntime.simulateGame()
+				#GameRuntime.simulateGame()
 			if val == 3: return
 
 	@staticmethod
 	def gameSetup():
-		#print(game_board.pile.arrange_dominos_doubles_first_in_2d_list(0,12)) 
-		GameEngine.GameEngine.num_players = GameEngine.GameEngine.retriveInput("How many players?: ", True, "Please Enter an int")
-		
+		while True:
+			GameEngine.GameEngine.num_players = GameEngine.GameEngine.retriveInput("How many players?: ", True, "Please Enter an int")
+			if GameEngine.GameEngine.num_players <= 4:
+				break
+			else:
+				print("Maximum Lobby Size is 4 Players!")
+
 		for x in range(GameEngine.GameEngine.num_players):
 			temp =  Player.Player()
 			temp.name = GameEngine.GameEngine.retriveInput("Enter your name: ", False, "")
