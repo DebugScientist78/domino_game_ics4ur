@@ -63,3 +63,4 @@ class GameEngine:
 			if x == len(GameEngine.turn_order)-1: print(GameEngine.turn_order[x].name, end='')
 			else: print(GameEngine.turn_order[x].name, end=' -> ')
 		print("")
+	

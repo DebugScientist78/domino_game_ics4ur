@@ -4,11 +4,11 @@ import random
 class Deque:
 	def __init__(self, ls=[]):
 		self.deq = ls[:]
-	def appendL(self, data):
-		self.deq.append(data)
 	def appendR(self, data):
+		self.deq.append(data)
+	def appendL(self, data):
 		ls = [data]
-		self.deq = self.deq + ls
+		self.deq = ls + self.deq
 	def popL(self):
 		self.deq.pop(0)
 	def popR(self):
@@ -47,7 +47,6 @@ class GameBoard:
 		b = int(b)
 		return a,b
 
-
 	@staticmethod
 	def grabStartHand():
 		''' 
@@ -80,3 +79,17 @@ class GameBoard:
 		given an string array of dominos, check to see if any of them are valid to play
 		return False if none, return a list of valid options
 		'''
+		l = GameBoard.getDomNum(GameBoard.board.getL())[0]
+		r = GameBoard.getDomNum(GameBoard.board.getR())[1]
+		print(l, r)
+
+		ls = []
+		for x in hand:
+			a, b = GameBoard.getDomNum(x)
+			if a == l or a == r:
+				ls.append(x)
+			elif b == l or b == r:
+				ls.append(x)
+
+		if len(ls) == 0: return False
+		return ls
