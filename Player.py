@@ -9,8 +9,12 @@ class Player:
 	def __repr__(self):
 		return "NAME: " + self.name + " | HAND: " + self.hand.__str__()
 
-	def removeDom(self, index):
-		self.hand.pop(index)
+	def removeDom(self, expr):
+		for x in range(len(self.hand)):
+			if self.hand[x] == expr:
+				self.hand.pop(x)
+				return True
+		return False
 
 	def doesHandHave(self, expr):
 		for x in self.hand:
@@ -21,3 +25,6 @@ class Player:
 	def isEmpty(self):
 		if len(self.hand) == 0: return True
 		return False
+
+	def addDom(self, expr):
+		self.hand.append(expr)

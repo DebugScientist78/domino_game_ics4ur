@@ -38,11 +38,15 @@ class GameEngine:
 		Lastly if no double was there, pick 4th domino get the sum of each number then the highest to lowest of sum order becomes the turn order
 		'''
 		player_in_list = [False] * GameEngine.num_players
+		lead_dom = ''
 		#print(player_in_list)
 		for x in range(12, -1, -1):
 			for plr in range(GameEngine.num_players):
 				expr = GameBoard.GameBoard.getDomExpr(x, x)
 				if GameEngine.player_list[plr].doesHandHave(expr) and player_in_list[plr] == False:
+					if len(GameEngine.turn_order) == 0: 
+						lead_dom = expr
+						GameEngine.player_list[plr].removeDom(expr)
 					GameEngine.turn_order.append(GameEngine.player_list[plr])
 					player_in_list[plr] = True
 
@@ -54,6 +58,9 @@ class GameEngine:
 				pair = (int(a+b), GameEngine.player_list[x])
 				remaining_players.append(pair)
 		remaining_players.sort(reverse=True)
+		if len(GameEngine.turn_order) == 0: 
+			lead_dom = remaining_players[0][1].hand[3]
+			GameEngine.player_list[plr].removeDom(lead_dom)
 		#print(remaining_players)
 		for x in remaining_players:
 			GameEngine.turn_order.append(x[1])
@@ -64,3 +71,4 @@ class GameEngine:
 			else: print(GameEngine.turn_order[x].name, end=' -> ')
 		print("")
 	
+		GameBoard.GameBoard.board.appendL(lead_dom)
