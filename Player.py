@@ -10,6 +10,18 @@ class Player:
     def __repr__(self):
         return "NAME: " + self.name + " | HAND: " + self.hand.__str__() + " | win count: " + str(self.win_count)
 
+    def __gt__(self, other):
+        self_d = self.hand[3]
+        other_d = other.hand[3]
+        if self_d > other_d: return True
+        else: return False
+        
+    def __lt__(self, other):
+        self_d = self.hand[3]
+        other_d = other.hand[3]
+        if self_d < other_d: return True
+        else: return False
+
     def removeDom(self, expr):
         for x in range(len(self.hand)):
             if self.hand[x] == expr:

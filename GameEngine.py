@@ -58,6 +58,7 @@ class GameEngine:
                 a, b = GameBoard.GameBoard.getDomNum(GameEngine.player_list[x].hand[3])
                 pair = (int(a+b), GameEngine.player_list[x])
                 remaining_players.append(pair)
+
         remaining_players.sort(reverse=True)
         if len(GameEngine.turn_order) == 0: 
             lead_dom = remaining_players[0][1].hand[3]

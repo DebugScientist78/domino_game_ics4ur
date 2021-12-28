@@ -1,6 +1,7 @@
 import GameBoard
 import GameEngine
 import Player
+import Stats
 
 class GameRuntime:
 
@@ -8,10 +9,30 @@ class GameRuntime:
     def startMenu():
         print("Welcome to Dominos!\nWould you like to?")
         while True:
-            val = GameEngine.GameEngine.retriveInput("1) Play\n2) Read the Rules\n3) Exit Program \n", True, "Please Enter an from 1-3")
+            val = GameEngine.GameEngine.retriveInput("1) Play\n2) Get Player Stats\n3) Get Match Histories\n4) Exit Program \n", True, "Please Enter an from 1-4")
             if val == 1:
                 GameRuntime.simulateGame()
-            if val == 3: return
+            elif val == 2:
+                temp =''
+                while True:
+                    temp = GameEngine.GameEngine.retriveInput("Enter player name: ", False, "")
+                    if temp.isalpha():
+                        break
+                    else:
+                        print("Alphabetic Characters Only!")
+                Stats.Stats.displayPlayerStats(temp) 
+            elif val == 3:
+                temp = 0
+                while True:
+                    temp = GameEngine.GameEngine.retriveInput("Enter the depth of viewing for match history: ", True, "")
+                    if temp <= Stats.Stats.getHistorySize():
+                        break
+                    else:
+                        print("must be less than " + str(Stats.Stats.getHistorySize()))
+                Stats.Stats.displayHistory(temp) 
+            elif val == 4:
+                Stats.Stats.con.close()
+                return
 
     @staticmethod
     def playerSetup():
@@ -133,13 +154,23 @@ class GameRuntime:
     @staticmethod
     def simulateGame():
         GameRuntime.playerSetup()
-        while True:
-            #check who has won x rounds
-            for plr in GameEngine.GameEngine.player_list:
-                if plr.win_count == (GameEngine.GameEngine.num_games//2+1):
-                    print(plr.name + " is the Winner!")
-                    return
+        win_cond = (GameEngine.GameEngine.num_games//2)+1
+        win_plr = ''
+        playing = True
+        while playing:
             GameRuntime.roundSetup()
             winner = GameRuntime.simulateRound()
             winner.winRound()
             print(winner.name + " wins the Round!\n")
+            #check who has won x rounds
+            for plr in GameEngine.GameEngine.player_list:
+                if plr.win_count == win_cond:
+                    print(plr.name + " is the Winner!")
+                    win_plr = plr.name
+                    playing = False
+                    break
+        name_ls = []
+        for plr in GameEngine.GameEngine.player_list:
+            name_ls.append(plr.name)
+            Stats.Stats.updateStats(plr.name, (plr.win_count == win_cond))
+        Stats.Stats.addMatchHist(name_ls, win_plr, GameEngine.GameEngine.num_games)
