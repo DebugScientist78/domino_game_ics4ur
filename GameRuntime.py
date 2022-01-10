@@ -40,7 +40,7 @@ class GameRuntime:
             for x in range(GameEngine.GameEngine.num_players):
                 temp = Player.Player()
                 while True:
-                    temp.name = GameEngine.GameEngine.retriveInput("Player " + str(x) + ", Enter your name: ", False, "")
+                    temp.name = GameEngine.GameEngine.retriveInput("Player " + str(x+1) + ", Enter your name: ", False, "")
                     if temp.name.isalpha():
                         break
                     else:
