@@ -36,24 +36,23 @@ class GameRuntime:
 
     @staticmethod
     def playerSetup():
-        while True:
-            for x in range(GameEngine.GameEngine.num_players):
-                temp = Player.Player()
-                while True:
-                    temp.name = GameEngine.GameEngine.retriveInput("Player " + str(x+1) + ", Enter your name: ", False, "")
-                    if temp.name.isalpha():
-                        break
-                    else:
-                        print("Alphabetic Characters Only!")
-                GameEngine.GameEngine.player_list.append(temp)
-            print(GameEngine.GameEngine.player_list)
-
+        for x in range(GameEngine.GameEngine.num_players):
+            temp = Player.Player()
             while True:
-                GameEngine.GameEngine.num_games = GameEngine.GameEngine.retriveInput("How many rounds?: ", True, "Please enter an odd int")
-                if GameEngine.GameEngine.verifyGamesCount(GameEngine.GameEngine.num_games):
+                temp.name = GameEngine.GameEngine.retriveInput("Player " + str(x+1) + ", Enter your name: ", False, "")
+                if temp.name.isalpha():
                     break
                 else:
-                    print("Please enter an odd integer")
+                    print("Alphabetic Characters Only!")
+            GameEngine.GameEngine.player_list.append(temp)
+        print(GameEngine.GameEngine.player_list)
+
+        while True:
+            GameEngine.GameEngine.num_games = GameEngine.GameEngine.retriveInput("How many rounds?: ", True, "Please enter an odd int")
+            if GameEngine.GameEngine.verifyGamesCount(GameEngine.GameEngine.num_games):
+                break
+            else:
+                print("Please enter an odd integer")
 
     @staticmethod
     def roundSetup():
