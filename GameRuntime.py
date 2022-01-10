@@ -37,16 +37,10 @@ class GameRuntime:
     @staticmethod
     def playerSetup():
         while True:
-            GameEngine.GameEngine.num_players = GameEngine.GameEngine.retriveInput("How many players?: ", True, "Please Enter an int")
-            if GameEngine.GameEngine.num_players <= 4 and GameEngine.GameEngine.num_players > 1:
-                break
-            else:
-                print("Maximum Lobby Size is 4 Players!\nThere must be atleast 2 Players!")
-
         for x in range(GameEngine.GameEngine.num_players):
             temp =  Player.Player()
             while True:
-                temp.name = GameEngine.GameEngine.retriveInput("Enter your name: ", False, "")
+                temp.name = GameEngine.GameEngine.retriveInput("Player " str(x) + ", Enter your name: ", False, "")
                 if temp.name.isalpha():
                     break
                 else:

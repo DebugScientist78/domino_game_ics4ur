@@ -19,37 +19,43 @@ class Stats:
     
     @staticmethod
     def addMatchHist(plr_ls, winner, num_rounds):
-        Stats.cur.execute("SELECT * from MatchHistory")
-        #gets latest match number
-        match_num = len(Stats.cur.fetchall()) + 1
-        #adds match to db
-        Stats.cur.execute(Stats.matchhist_insert_com, (match_num, plr_ls.__str__(), winner, num_rounds))
-        Stats.con.commit()
+        try:
+            Stats.cur.execute("SELECT * from MatchHistory")
+            #gets latest match number
+            match_num = len(Stats.cur.fetchall()) + 1
+            #adds match to db
+            Stats.cur.execute(Stats.matchhist_insert_com, (match_num, plr_ls.__str__(), winner, num_rounds))
+            Stats.con.commit()
+        except sqlite3.Error as err:
+            print("Cannot add to match history", err)
     
     @staticmethod
     def updateStats(player_name, wins):
-        Stats.cur.execute("SELECT * from Stats")
-        records = Stats.cur.fetchall()
-        #get list of all previous player data
-        existing_players = []
-        for row in records:
-            existing_players.append(row[0])
-        
-        if player_name in existing_players:
-            player_data = []
+        try:
+            Stats.cur.execute("SELECT * from Stats")
+            records = Stats.cur.fetchall()
+            #get list of all previous player data
+            existing_players = []
             for row in records:
-                if row[0] == player_name:
-                    player_data = row
-                    break
-            win_c = player_data[1] + int(wins)
-            play_c = player_data[2] + 1
-            ratio = str(win_c)+'/'+str(play_c)
-            Stats.cur.execute(Stats.stats_update_com, (win_c, play_c , ratio, player_name))
-        else:
-            win_c = int(wins)
-            ratio = str(win_c) +"/1"
-            Stats.cur.execute(Stats.stats_insert_com, (player_name, win_c, 1, ratio))
-        Stats.con.commit()
+                existing_players.append(row[0])
+            
+            if player_name in existing_players:
+                player_data = []
+                for row in records:
+                    if row[0] == player_name:
+                        player_data = row
+                        break
+                win_c = player_data[1] + int(wins)
+                play_c = player_data[2] + 1
+                ratio = str(win_c)+'/'+str(play_c)
+                Stats.cur.execute(Stats.stats_update_com, (win_c, play_c , ratio, player_name))
+            else:
+                win_c = int(wins)
+                ratio = str(win_c) +"/1"
+                Stats.cur.execute(Stats.stats_insert_com, (player_name, win_c, 1, ratio))
+            Stats.con.commit()
+        except sqlite3.Error as err:
+            print("Cannot update player stats", err)
 
     @staticmethod
     def displayHistory(depth):
@@ -67,9 +73,13 @@ class Stats:
 
     @staticmethod
     def getHistorySize():
-        Stats.cur.execute("SELECT * from MatchHistory")
-        records = Stats.cur.fetchall()  
-        return len(records)
+        try:
+            Stats.cur.execute("SELECT * from MatchHistory")
+            records = Stats.cur.fetchall()  
+            return len(records)
+        except sqlite3.Error as err:
+            print("Could not access match history", err)
+            return -1
 
     @staticmethod
     def displayPlayerStats(player_name):

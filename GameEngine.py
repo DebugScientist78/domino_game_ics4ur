@@ -4,7 +4,7 @@ class GameEngine:
     player_list = []
     turn_order = []
     turn_num = 0
-    num_players = 0
+    num_players = 2
     num_games = 0
     turn_index = 0
     round_count = 1
